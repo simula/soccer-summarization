@@ -46,4 +46,4 @@ added: https://dl.acm.org/doi/10.1145/3552463.3557019.
 
 ## 👋 Contact 
 
-Please contact cise@simula.no, or paalh@simula.no for any questions regarding the dataset.
+Please contact susant.gautam@gmail.com, cise@simula.no, or paalh@simula.no for any questions regarding the dataset.
