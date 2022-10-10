@@ -1,8 +1,7 @@
 # Soccer Game Summarization using Audio Commentary, Metadata, and Caption
 
 This is the repository for
-paper **[Soccer Game Summarization using Audio Commentary, Metadata, and Captions](https://dl.acm.org/doi/10.1145/3552463.3557019)
-.**
+paper **[Soccer Game Summarization using Audio Commentary, Metadata, and Captions](https://dl.acm.org/doi/10.1145/3552463.3557019).**
 
 ## 📚 Datasets 
 
