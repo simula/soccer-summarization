@@ -1,0 +1,136 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://vjs.zencdn.net/7.19.2/video.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+        integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+<script type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+<script>
+    var myPlayer = videojs('video1');
+
+    function resolveTime(timeSec, seek = false) {
+        var predicate = (_x) => _x >= timeSec;
+        resolved = x.find(predicate)
+        if (seek) {
+            myPlayer.currentTime(resolved);
+        }
+        return resolved
+    }
+
+    function formatTime(currentTime) {
+        var minutes = Math.floor(currentTime / 60);
+        var seconds = Math.floor(currentTime - minutes * 60);
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        return minutes + ":" + seconds;
+    }
+
+
+    audioScore = {{audioScore|safe}};
+    //copy audioScore to audioScore_timeSorted
+    audioScore_timeSorted = audioScore.slice();
+    // sort audioScore_timeSorted
+    audioScore_timeSorted = audioScore_timeSorted.sort((a, b) => a[0] - b[0]);
+
+    for (var i = 0; i < audioScore.length; i++) {
+        // create a new div
+        $('#audioScoreDiv').append('<tr onclick="resolveTime(' + audioScore[i][0] + ',true)">' +
+            '<td>' + formatTime(audioScore[i][0]) + '</td>' +
+            '<td>' + audioScore[i][1].toFixed(2) + '</td>' +
+            '<td>' + audioScore[i][2] + '</td>' +
+            '</tr>');
+
+        {#var newDiv = document.createElement("div");#}
+        {#// set the class name#}
+        {#newDiv.className = "audioScore";#}
+        {#// set the innerHTML of the new div#}
+        {#newDiv.innerHTML = formatTime(audioScore[i][0]) + "  " + audioScore[i][1].toFixed(2) + ":  " + audioScore[i][2]#}
+        {#// add on click event#}
+        {#newDiv.setAttribute("onclick", "resolveTime(" + audioScore[i][0] + ", true)");#}
+        {#// get#}
+        {#// append the new div to the existing div#}
+        {#document.getElementById("audioScoreDiv").appendChild(newDiv);#}
+    }
+    $(document).ready(function () {
+        $('#table0').DataTable(
+            {
+                order: [[1, 'desc']],
+                stateSave: false,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            },
+        );
+    });
+
+    myPlayer.on('timeupdate',
+        function () {
+            console.log('current time:', myPlayer.currentTime());
+            // set value of CurrentIntensity to the current time
+            document.getElementById("CurrentTime").textContent = formatTime(myPlayer.currentTime());
+            // myPlayer.currentTime()to mm:ss
+            document.getElementById("CurrentIntensity").textContent = y[x.findIndex((_x) => _x >= myPlayer.currentTime())].toFixed(2);
+            // get index of x that is nearest to current time
+            console.log("match " + audioScore_timeSorted.find((_x) => _x[0] >= myPlayer.currentTime()))
+            // update nearestScoreDiv
+            nearestScore = audioScore_timeSorted.find((_x) => _x[0] >= myPlayer.currentTime())
+            document.getElementById("nearestScoreDiv").textContent =
+                "        " + formatTime(nearestScore[0]) + "   " + nearestScore[2] + "\n" + nearestScore[1].toFixed(2);
+
+        });
+
+    y = {{y}};
+    x = {{ x }};
+    var myPlot = document.getElementById('chartContainer'),
+
+        data = [{
+            y: y,
+            x: x,
+            type: 'scatter',
+            mode: 'markers',
+            marker: {size: 2},
+            name: 'Audio'
+
+        },
+            {
+                y: audioScore_timeSorted.map((_x) => _x[1]),
+                x: audioScore_timeSorted.map((_x) => _x[0]),
+                type: 'scatter',
+                mode: 'markers',
+                text: audioScore_timeSorted.map((_x) => _x[2]),
+                textposition: 'bottom',
+                marker: {size: 5},
+                name: 'Events'
+            }
+        ],
+        layout = {
+            showgrid: false, controls: false, margin: {
+                l: 0,
+                r: 0,
+                b: 0,
+                t: 0,
+                pad: 0
+            }, height: 300,
+            hovermode: 'closest',
+            showlegend: false,
+            {#legend: {x: 0, y: 0},#}
+            // #title: 'Click on a Point to Change Color<br>Double Click (anywhere) to Change it Back'
+        };
+    Plotly.newPlot('chartContainer', data, layout, {staticPlot: false});
+    myPlot.on('plotly_click', function (data) {
+        console.log(data.points[0].x);
+        myPlayer.currentTime(data.points[0].x);
+    });
+
+
+</script>

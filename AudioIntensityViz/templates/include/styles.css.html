@@ -1,0 +1,40 @@
+<style>
+    .video-js .vjs-progress-control {
+        position: absolute;
+        width: 100%;
+        top: -.3em;
+        height: 3px;
+        /* deal with resulting gap between progress control and control bar that
+           is the result of the attempt to keep things "clickable" on the controls */
+        background-color: #2B333F;
+        background-color: rgba(43, 51, 63, 0.7);
+    }
+
+    .video-js .vjs-progress-holder {
+        position: absolute;
+        margin: 0px;
+        top: 0%;
+        width: 100%;
+    }
+
+    .video-js .vjs-time-control {
+        display: block;
+    }
+
+    .video-js .vjs-remaining-time {
+        display: none;
+    }
+
+    .hideOnClickChartTitle {
+        position: relative;
+        background: snow;
+        width: min-content;
+        font-size: x-large;
+    }
+
+    .hideOnClickChartTitle:hover {
+        background: transparent;
+        color: transparent;
+    }
+
+</style>
