@@ -1,9 +1,15 @@
 # Soccer Game Summarization using Audio Commentary, Metadata, and Caption
 
 This is the repository for
-paper **[Soccer Game Summarization using Audio Commentary, Metadata, and Captions](https://dl.acm.org/doi/10.1145/3552463.3557019).**
+paper **[Soccer Game Summarization using Audio Commentary, Metadata, and Captions](https://dl.acm.org/doi/10.1145/3552463.3557019)
+.**
 
-## 📚 Datasets 
+## 💻 Audio Intensity Visualization Dashboard
+
+The codes for Audio Intensity Visualization Dashboard as mentioned in the paper can be
+access [right here](https://github.com/simula/soccer-summarization/tree/master/AudioIntensityViz).
+
+## 📚 Datasets
 
 This repository contains the following datasets:
 
@@ -14,11 +20,11 @@ This repository contains the following datasets:
 You can access the
 datasets [right here](https://github.com/simula/soccer-summarization/tree/master/Datasets).
 
-## 🚧 WIP 
+## 🚧 WIP
 
 More data and contents can be added soon. Stay tuned!
 
-## 📎 Cite 
+## 📎 Cite
 
 If you use contents from this in your research, Please cite the following paper:
 
@@ -44,6 +50,6 @@ competitions and commercial purposes needs prior written permission. In all docu
 the dataset or report experimental results, a reference to the related article needs to be
 added: https://dl.acm.org/doi/10.1145/3552463.3557019.
 
-## 👋 Contact 
+## 👋 Contact
 
 Please contact susant.gautam@gmail.com, cise@simula.no, or paalh@simula.no for any questions regarding the dataset.
